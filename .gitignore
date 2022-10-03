@@ -21,6 +21,9 @@ media/*
 
 secret_keys.py
 
+layoutTemplate
+layoutTemplate/
+
 .vscode
 .vscode/
 
