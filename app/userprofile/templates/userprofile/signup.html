@@ -52,8 +52,13 @@
 
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" id="username" placeholder="Username" name="username" type="username"
+                                    <input class="form-control" id="username_field" placeholder="Username" name="username" type="username"
                                         autofocus>
+                                        <small class="form-text text-muted" id="invalidusername">
+                                            <font color="red">
+                                                This username already exists!<br>
+                                            </font>
+                                        </small>
                                         <small id="usernameHelp" class="form-text text-muted">
                                             Your username must be unique. We will notify you if someone has already taken it.</small>
                                 </div>
@@ -102,6 +107,7 @@
 
 
     <script>
+        /*
         $(document).ready(function () {
             // отслеживаем событие отправки формы
             $('#id_username').keyup(function () {
@@ -114,11 +120,12 @@
                         if (response.is_admissible == true) {
                             $('#id_username').removeClass('is-valid').addClass('is-invalid');
                             $('#id_username').after('<div class="invalid-feedback d-block" id="usernameError">This username is not available!</div>')
+                            alert('True')
                         }
                         else {
                             $('#id_username').removeClass('is-invalid').addClass('is-valid');
                             $('#usernameError').remove();
-  
+                            alert('Flase')
                         }
                     },
                     // если ошибка, то
@@ -130,6 +137,50 @@
                 return false;
             });
         })
+        */
+
+        $(document).ready(function () {
+            // отслеживаем событие отправки формы
+
+            let usernameField = document.getElementById('username_field')
+            let invalidUserNameText = document.getElementById('invalidusername')
+            invalidUserNameText.hidden = true
+
+            usernameField.onchange  = () => {
+                // создаем AJAX-вызов
+
+                let usernameValue = usernameField.value
+
+
+                $.ajax({
+                    data: {"username": usernameValue},  // получаяем данные формы
+                    url: "{% url 'checkusername' %}",
+                    method: 'GET',
+                    // если успешно, то
+                    success: function (response) {
+                        if (response.is_admissible == true) {
+                            invalidUserNameText.hidden = true
+                            $('#id_username').removeClass('is-valid').addClass('is-invalid');
+                            $('#id_username').after('<div class="invalid-feedback d-block" id="usernameError">This username is not available!</div>')
+                        }
+                        else {
+                            invalidUserNameText.hidden = false
+                            $('#id_username').removeClass('is-invalid').addClass('is-valid');
+                            $('#usernameError').remove();
+                        }
+                    },
+                    // если ошибка, то
+                    error: function (response) {
+                        // предупредим об ошибке
+                        console.log(response.responseJSON.errors)
+                    }
+                });
+                return false;
+            };
+
+        })
+
+
     </script>
 
 </body>

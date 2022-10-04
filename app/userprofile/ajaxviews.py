@@ -5,8 +5,8 @@ from django.views import View
 
 
 def check_username_for_uniqueness(request):
-
-    user = User.objects.filter(username=request.GET.get('username', None))
+    """Проверка допустимости имении пользователя"""
+    user = User.objects.filter(username=request.GET.get('username', None).replace(' ', ''))
 
     is_admissible = False if user else True
 
