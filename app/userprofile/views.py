@@ -4,8 +4,14 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import redirect, render
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import CustomAuthenticationForm
+
+
+class UserPageView(LoginRequiredMixin, View):
+    login_url = 'login'
+    def get(self, request):
+        return render(request, 'userprofile/userpage.html')
 
 
 class LoginView(View):
