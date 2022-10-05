@@ -21,18 +21,14 @@
                             </div>
 
                             <div class="panel-body">
+
+                                {% for game in games %}
                                 <div class="alert alert-success">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
+                                    {{game.name}} 
+                                    <button type="button" class="btn btn-primary">Join as player</button>
                                 </div>
-                                <div class="alert alert-info">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-                                </div>
-                                <div class="alert alert-warning">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-                                </div>
-                                <div class="alert alert-danger">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. <a href="#" class="alert-link">Alert Link</a>.
-                                </div>
+                                {% endfor %}
+
                             </div>
                         
                         </div>

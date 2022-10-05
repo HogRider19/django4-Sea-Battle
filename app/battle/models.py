@@ -11,9 +11,11 @@ class Game(models.Model):
     winner = models.OneToOneField(
         User, on_delete=models.DO_NOTHING, blank=True, null=True)
     player1 = models.ForeignKey(
-        User, related_name='game_player1', on_delete=models.DO_NOTHING)
+        User, related_name='game_player1', 
+        on_delete=models.DO_NOTHING)
     player2 = models.ForeignKey(
-        User, related_name='game_player2', on_delete=models.DO_NOTHING)
+        User, related_name='game_player2', 
+        on_delete=models.DO_NOTHING, blank=True, null=True)
     spectators = models.ManyToManyField(
         User, related_name='viewed_game', blank=True)
     subscribers = models.ManyToManyField(
