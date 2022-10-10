@@ -21,8 +21,8 @@ class GameListView(ListView):
 
 
 class GameListFilter(View):
-    def get(self, request, strslice):
-        games = Game.objects.filter(name__icontains=strslice).values()
+    def get(self, request):
+        games = Game.objects.filter(name__icontains=request.GET.get('strslice')).values()
         return JsonResponse({'games': list(games)})
 
 

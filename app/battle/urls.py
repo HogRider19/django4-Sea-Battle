@@ -7,5 +7,5 @@ urlpatterns = [
     path('game/<int:pk>', views.GameDetailView.as_view() ,name='game'),
     path('', views.HomeView.as_view(), name='home'),
 
-    path('gamefilter/<str:strslice>/', views.GameListFilter.as_view(), name='gamefilter'),
+    path('gamefilter/', views.GameListFilter.as_view(), name='gamefilter'),
 ]

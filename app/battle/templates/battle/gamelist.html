@@ -50,9 +50,9 @@
                             <div class="panel-body">
                                 <form role="form">
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Enter game name">
+                                        <input class="form-control" id="namefield" placeholder="Enter game name">
                                     </div>
-                                    <button type="button" class="btn btn-primary">Find</button>
+                                    <button id="formbutton" type="button" class="btn btn-primary">Find</button>
                                 </form>
                             </div>
                         
@@ -74,20 +74,26 @@
 {% block includefiles %}
     <script>
         $(document).ready(function () {
-            $.ajax({
-                    data: {"strslice": usernameValue},  // получаяем данные формы
+
+            let findField = document.getElementById('namefield')
+            let button = document.getElementById('formbutton')
+            
+            button.onclick = () => {
+                $.ajax({
+                    data: {"strslice": findField.value},  // получаяем данные формы
                     url: "{% url 'gamefilter' %}",
                     method: 'GET',
                     // если успешно, то
                     success: function (response) {
-                        
+                        console.log("success")
                     },
                     // если ошибка, то
                     error: function (response) {
                         // предупредим об ошибке
                         console.log(response.responseJSON.errors)
                     }
-                }); 
+                });
+            } 
         })
     </script>
 {% endblock %}
