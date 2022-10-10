@@ -23,9 +23,16 @@
                             <div class="panel-body">
 
                                 {% for game in games %}
+                                
+                                {% if not game.player2 or not game.player1 %}
                                 <div class="alert alert-success">
+                                {% else %}
+                                <div class="alert alert-info">
+                                {% endif %}
+
                                     {{game.name}} 
-                                    <button type="button" class="btn btn-primary">Join as player</button>
+                                    <a href="{% url 'game' game.id %}"><button type="button" class="btn btn-primary">Join as player</button></a>
+                                    <a href="{% url 'game' game.id %}"><button type="button" class="btn btn-primary">Join as spectators</button></a>
                                 </div>
                                 {% endfor %}
 
@@ -61,4 +68,26 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+
+{% block includefiles %}
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                    data: {"strslice": usernameValue},  // получаяем данные формы
+                    url: "{% url 'gamefilter' %}",
+                    method: 'GET',
+                    // если успешно, то
+                    success: function (response) {
+                        
+                    },
+                    // если ошибка, то
+                    error: function (response) {
+                        // предупредим об ошибке
+                        console.log(response.responseJSON.errors)
+                    }
+                }); 
+        })
+    </script>
 {% endblock %}
