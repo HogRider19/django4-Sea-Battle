@@ -75,17 +75,20 @@
     <script>
         $(document).ready(function () {
 
-            let findField = document.getElementById('namefield')
-            let button = document.getElementById('formbutton')
+            let findField = document.getElementById('namefield');
+            let findFieldValue = findField.value
+            let button = document.getElementById('formbutton');
+
+            let listGame = []
             
-            button.onclick = () => {
+            let serachGames = () => {
                 $.ajax({
-                    data: {"strslice": findField.value},  // получаяем данные формы
+                    data: {"strslice": findFieldValue},  // получаяем данные формы
                     url: "{% url 'gamefilter' %}",
                     method: 'GET',
                     // если успешно, то
                     success: function (response) {
-                        console.log("success")
+                        console.log(findFieldValue);
                     },
                     // если ошибка, то
                     error: function (response) {
@@ -93,7 +96,17 @@
                         console.log(response.responseJSON.errors)
                     }
                 });
-            } 
+            };
+
+            button.onclick = () => {
+                findFieldValue = findField.value;
+                serachGames();
+            };
+
+            setInterval(() => {
+                serachGames();
+            }, 1000);
+
         })
     </script>
 {% endblock %}
